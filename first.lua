@@ -14,9 +14,9 @@ resetWin   = 4
 
 function dobet()
     if win then
-        winStreak += 1
+        winStreak = winStreak + 1
         loseStreak = 0
-        wining += 1
+        wining = wining + 1
         if(wining == resetWin and base > baseBase) then
             base = base/afterMulti
             wining = 0
@@ -25,7 +25,7 @@ function dobet()
         nextbet = base        
     else
         winStreak = 0
-        loseStreak += 1
+        loseStreak = loseStreak + 1
         if (loseStreak >= mutiafter) then
             wining = 0
             winStreak = 0

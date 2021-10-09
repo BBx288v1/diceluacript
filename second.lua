@@ -18,16 +18,16 @@ profit=0
 
 function dobet()
     if win then
-        profit+=nextbet*(multiplier-1)
+        profit=profit+nextbet*(multiplier-1)
         if(profit > maxProfit) then
             maxProfit=profit
             if(base2 > baseBase) then
                 base2=baseBase
             end
         end
-        winStreak += 1
+        winStreak =winStreak+ 1
         loseStreak = 0
-        wining += 1
+        wining = wining+1
         if(wining == resetWin and base > base2) then
             base = base/afterMulti
             wining = 0
@@ -35,9 +35,9 @@ function dobet()
         end
         nextbet = base        
     else
-        profit -= nextbet
+        profit = profit - nextbet
         winStreak = 0
-        loseStreak += 1
+        loseStreak =loseStreak+ 1
         if (loseStreak >= mutiafter) then
             wining = 0
             winStreak = 0

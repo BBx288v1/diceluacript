@@ -19,7 +19,7 @@ function dobet()
     if win then        
         loseStreak = 0
         if(sleep == 0) then
-            winStreak += 1
+            winStreak = winStreak+1
             if(nextbet*payout < base * 2) then
                 nextbet   = nextbet*payout
                 betArr[noBet] = nextbet
@@ -29,14 +29,14 @@ function dobet()
             end
         end
         if(sleep > 0) then
-            sleep -= 1
+            sleep = sleep-1
             if(sleep == 0)then
                 chance  = baseChance
             end
         end
     else
         winStreak = 0
-        loseStreak += 1
+        loseStreak = loseStreak+1
         if(sleep == 0) then
             nextbet = nextbet * (1/(payout-1)+1)
             betArr[noBet] = nextbet

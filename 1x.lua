@@ -20,12 +20,12 @@ function dobet()
     if win then        
         loseStreak = 0
         if(sleep > 0) then
-            sleep -= 1
+            sleep = sleep-1
             chance    = baseChance
             nextbet   = betBackUp
             winStreak = 2
         else
-            winStreak += 1
+            winStreak = winStreak+1
             if(winStreak < maxWinStreak) then
                 nextbet = nextbet*payout
             else
@@ -37,7 +37,7 @@ function dobet()
         
     else
         winStreak = 0
-        loseStreak += 1
+        loseStreak = loseStreak+1
         if (sleep == 0) then
             betBackUp = betBackUp * multiplier
             sleep     = 1
