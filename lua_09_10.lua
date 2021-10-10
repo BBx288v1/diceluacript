@@ -2,12 +2,13 @@ chance1 = 78.57; payout1 = 1.26
 chance2 = 49.50; payout2 = 2; multiply2 = 2.01
 chance3 = 33.00; payout3 = 3; multiply3 = 1.51
 chance4 = 16.50; payout4 = 6; multiply4 = 1.21
-chance5 = 8.25; payout5 = 12; multiply5 = 1.1
-chance6 = 4.13; payout6 = 24; multiply6 = 1.05
-nextbet = baseBet; chance = chance1
+chance5 = 9.90; payout5 = 10; multiply5 = 1.12
+chance6 = 6.60; payout6 = 15; multiply6 = 1.08
+chance7 = 4.95; payout7 = 20; multiply7 = 1.06
 taget = 5
-divideBalance = 3650; basebet = balance/divideBalance
+divideBalance = 2420; basebet = balance/divideBalance
 multiplyProfit = 1.1; takeprofit = balance*multiplyProfit
+nextbet = basebet; chance = chance1
 targetToStop = balance*1.2
 oldBalace = balance
 
@@ -52,22 +53,27 @@ function dobet()
         elseif (losestreak == 12)then
             nextbet = nextbet*payout4/(payout5 -1)
             chance = chance5
-        elseif (losestreak > 12 and losestreak < 24)then
+        elseif (losestreak > 12 and losestreak < 22)then
             nextbet = nextbet*multiply5
-        elseif (losestreak == 24)then
+        elseif (losestreak == 22)then
             nextbet = nextbet*payout5/(payout6 -1)
             chance = chance6
-        elseif (losestreak > 24)then
+        elseif (losestreak > 22 and losestreak < 37)then
             nextbet = nextbet*multiply6
+        elseif (losestreak == 37)then
+            nextbet = nextbet*payout6/(payout7 -1)
+            chance = chance6
+        elseif (losestreak > 37)then
+            nextbet = nextbet*multiply7
         end
     end
     if(balance >= takeprofit)then
         resetseed()
         takeprofit = balance*multiplyProfit
         basebet   = balance/divideBalance
-        if(balance >= targetToStop)then
-            stop()
-        end
+    end
+    if(balance >= targetToStop)then
+        stop()
     end
     print("Proifit: "..string.format("%.4f",profit/(oldBalace)*100).."%")
 end
