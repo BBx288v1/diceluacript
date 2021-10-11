@@ -1,13 +1,9 @@
 
-bet = 1
-multi = 2
-step = 5
-chance = 49
-mainChain = 98
-currentWinPrice = bet*(multi-1)
-currentLose = 0
-while chance < 70:
-    currentLose += bet
-    chance += step
-    bet = bet+(currentLose + currentWinPrice)/(99/chance-1)
-    print(bet)
+chance = 990000000
+mul = 98000
+while mul >= 100:
+    if((chance/mul)%100==0):
+        #print(str(chance/mul/10000)+" -- "+str(mul/1000))
+        print(str(chance/mul/10000))
+        #print(str(mul/1000))
+    mul -= 10
