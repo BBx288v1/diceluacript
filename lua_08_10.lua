@@ -12,7 +12,7 @@ multiplierSuper = 2
 chanceUltra = 82.50
 payoutUltra = 1.2
 multiplierUltra = 6
-divideBalance = 1050
+divideBalance = 2600
 bigBet   = balance/divideBalance
 sleepBet = 0.0000001
 nextbet = sleepBet
@@ -46,9 +46,9 @@ function dobet()
         elseif (losestreak == 34)then
             nextbet = nextbet*payoutHigh/(payoutSuper -1)
             chance = chanceSuper
-        elseif (losestreak > 34 and losestreak < 35)then
+        elseif (losestreak > 34 and losestreak < 36)then
             nextbet = nextbet*multiplierSuper
-        elseif (losestreak == 35)then
+        elseif (losestreak == 36)then
             nextbet = nextbet*payoutSuper/(payoutUltra -1)
             chance = chanceUltra
         end

@@ -1,21 +1,10 @@
 
-baseChance = 78.57
-newChange = 49.50
-highChance = 24.75
-chance     = baseChance
-payout     = 1.26
-divideBalance = 20000
-basebet   = balance/divideBalance
-taget = 5
-multiply = 2
-newPayout = 2
-multiplyHighChance = 1.5
-highPayout = 4
-nextbet = basebet
-maxLoseStreak = 5
-divideBalanceTakePf = 10
-takeprofit = balance/divideBalanceTakePf
-targetToStop = balance*1.2
+baseChance = 78.57; newChange = 49.50; highChance = 24.75;chance = baseChance
+payout     = 1.26;newPayout = 2;highPayout = 4
+multiply = 2;multiplyHighChance = 1.5
+divideBalance = 20000;basebet   = balance/divideBalance
+taget = 5;nextbet = basebet;maxLoseStreak = 5
+divideBalanceTakePf = 10;takeprofit = balance/divideBalanceTakePf;targetToStop = balance*1.2
 
 function dobet()
     if win then
