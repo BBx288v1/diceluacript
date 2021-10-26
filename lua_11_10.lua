@@ -75,7 +75,7 @@ function dobet()
             check = false
         elseif(e<0)then
             nextbet = nextbet*multiply
-            sleep(secondSleep)
+            --sleep(secondSleep)
         end
     end
     if(balance >= takeprofit)then
