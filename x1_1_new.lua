@@ -1,9 +1,9 @@
 
-baseChance    = 9.8
-chanceChange  = 88.8
+baseChance    = 9.9
+chanceChange  = 78.57
 chance        = baseChance
-multiplier    = 1.1
-big           = balance/10
+multiplier    = 1.26
+big           = balance/700
 mainBig       = big
 small         = 0.00000001
 mainSmall     = small
@@ -24,7 +24,7 @@ function dobet()
     if win then
         currentLose = 0
         loseStreak = 0
-        profitC = profitC + nextbet*(98/chance-1)
+        profitC = profitC + nextbet*(99/chance-1)
         if(nextbet > small)then
             timeToBig = math.random(5,15)
             if(big * multiplier < mainBig*2)then
@@ -70,9 +70,6 @@ function dobet()
             nextbet = small
             chance = baseChance
         end
-    end
-    if(profit >= takeProfit or profit-nextbet <= -stopLose)then
-        stop()
     end
     if balance>largebalance then largebalance=balance;loseamount=0 else loseamount=largebalance-balance end
     if loseamount>largestloss then largestloss=loseamount end

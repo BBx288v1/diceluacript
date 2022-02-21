@@ -42,10 +42,6 @@ taget_2 = 5;nextbet_2 = basebet_2;maxLoseStreak_2 = 5
 
 listDivideBalance_3 = {2500,5000,10000,20000,40000}; divideBalance_3 = 6000; basebet_3 = balance/divideBalance_3
 
-multiplyProfit = 1.01; takeprofit = balance*multiplyProfit; oldBalace = balance;
-targetToStop = balance*100
-secondSleep = 0
-
 divideBalance_4 = 2600
 bigBet   = balance/divideBalance_4
 
@@ -53,14 +49,39 @@ divideBalance_5 = 3500
 bigBet_5   = balance/divideBalance_5
 betBackUp = bigBet
 
+divideBalance_6 = 700
+big_6           = balance/divideBalance_6
+mainBig_6       = big_6
+timeToBig = math.random(5,15)
 
-typeBet = math.random(2, 5)
-if(typeBet == 1 or typeBet == 3 or typeBet == 4 or typeBet == 5)then
+chance_7 = 49.5; multiplier_7 = 2;divideBalance_7 = 345; baseBase_7 = balance/divideBalance_7;base_7 = baseBase_7
+mutiafter_7  = 4;afterMulti_7 = 4;resetWin_7   = 4
+
+currentLose_8 = 0;stepChance_8=5;divideBalance_8 = 250000;base_8 = balance/divideBalance_8;maxChance_8=75
+
+divideBalance_9 = 30000; baseBig_9 = balance/divideBalance_9; bigBackUp_9 = baseBig_9; chanceBig_9 = 9.9; multiplierBig_9 = 1.15
+
+typeBet = math.random(2, 8)
+if(typeBet == 1 or typeBet == 3 or typeBet == 4 or typeBet == 5 or typeBet == 6) then
     nextbet = sleepbet
-else
+    chance = superChance_2
+elseif(typeBet == 2)then
     nextbet = basebet_2
+    chance = baseChance_2
+elseif(typeBet == 7)then
+    nextbet = base_7
+    chance = chance_7
+elseif(typeBet == 8)then
+    nextbet = base_8
+    chance = chance3
+elseif(typeBet == 9)then
+    nextbet = baseBig_9
+    chance = chanceBig_9
 end
 
+multiplyProfit = 1.01; takeprofit = balance*multiplyProfit; oldBalace = balance;
+targetToStop = balance*100
+secondSleep = 0
 
 
 function dobet()
@@ -74,7 +95,7 @@ function dobet()
     end
      
     function seedRandomizer()
-        seedRandomizer = math.random(1, 5)
+        seedRandomizer = math.random(1, 2)
         while (seedRandomizer >= 1) do 
             resetseed()
             seedRandomizer = seedRandomizer - 1
@@ -166,8 +187,7 @@ function dobet()
                     end
                 end
             end
-        end
-        print("[Chance]:   ["..string.format("%.2f",chance).."]")        
+        end    
     end
 
     function dobet3()
@@ -230,7 +250,6 @@ function dobet()
                 chance = baseChance_2
             end
         end
-        print("[Chance]:   ["..string.format("%.2f",chance).."]")
     end
 
     function dobet5()
@@ -252,7 +271,97 @@ function dobet()
                 nextbet = sleepbet
             end
         end
-        print("[Chance]:   ["..string.format("%.2f",chance).."]")
+    end
+
+    function dobet6()
+        if win then
+            if(nextbet > sleepbet)then
+                timeToBig = math.random(5,15)
+                if(big_6 * payout_2 < mainBig_6*2)then
+                    big_6 = big_6 * payout_2  
+                else
+                    big_6 = mainBig_6
+                    seedRandomizer()
+                end
+                hiloRandomizer()
+            end
+            chance      = superChance_2
+            nextbet     = sleepbet  
+        else
+            if(nextbet > sleepbet)then
+                big_6 = big_6*(1/(payout_2-1)+1)
+                nextbet = sleepbet
+                hiloRandomizer()
+            end
+            if(currentstreak*-1 == timeToBig) then
+                nextbet = big_6
+                chance = baseChance_2
+            else
+                nextbet = sleepbet
+                chance = superChance_2
+            end
+        end
+    end
+
+    function dobet7()
+        if win then
+            if(currentstreak % resetWin_7 == 0 and base_7 > baseBase_7) then
+                base_7 = base_7/afterMulti_7
+                hiloRandomizer()
+                seedRandomizer()
+            end
+            nextbet = base_7        
+        else
+            if ((currentstreak*-1) % mutiafter_7 == 0) then
+                base_7 = base_7*afterMulti_7
+                nextbet = base_7
+                hiloRandomizer()
+                seedRandomizer()
+            else
+                nextbet = nextbet * multiplier_7
+            end
+        end
+    end
+
+    function dobet8()
+        if win then
+            currentLose_8 = 0
+            if(chance ~= chance3)then
+                hiloRandomizer()
+            end
+            chance      = chance3
+            nextbet     = base_8
+        else
+            currentLose_8 = currentLose_8+nextbet
+            if(chance < maxChance_8) then
+                chance = chance + stepChance_8
+            else
+                chance = chance3
+                hiloRandomizer()
+                seedRandomizer()
+            end
+            nextbet = nextbet+(currentLose_8)*1.2/(99/chance-1)
+        end
+    end
+
+    function dobet9()
+        if win then
+            if(nextbet ~= sleepbet)then
+                hiloRandomizer()
+                seedRandomizer()
+            end
+            nextbet = baseBig_9
+            bigBackUp_9 = baseBig_9
+            
+        else
+            if(currentstreak*-1 < 20)then
+                bigBackUp_9 = nextbet*multiplierBig_9
+                nextbet = bigBackUp_9
+            elseif(currentstreak*-1 == 20)then
+                bigBackUp_9 = nextbet*multiplierBig_9
+                nextbet = sleepbet
+            end
+        end
     end
 
 
@@ -267,6 +376,14 @@ function dobet()
         dobet4()
     elseif(typeBet == 5)then
         dobet5()
+    elseif(typeBet == 6)then
+        dobet6()
+    elseif(typeBet == 7)then
+        dobet7()
+    elseif(typeBet == 8)then
+        dobet8()
+    elseif(typeBet == 9)then
+        dobet9()
     end
 
     if(balance >= takeprofit)then
@@ -274,17 +391,32 @@ function dobet()
         basebet_2   = balance/divideBalance_2
         bigBet   = balance/divideBalance_4
         bigBet_5   = balance/divideBalance_5
+        big_6           = balance/divideBalance_6;mainBig_6_6 = big
+        baseBase_7_7 = balance/divideBalance_7;base_7 = baseBase_7_7
+        base_8 = balance/divideBalance_8
+        baseBig_9 = balance/divideBalance_9; bigBackUp_9 = baseBig_9
         listBaseBet = {balance/listDivideBalance[1],balance/listDivideBalance[2],balance/listDivideBalance[3],balance/listDivideBalance[4],balance/listDivideBalance[5]}
         count = 0
         while count <= #listChance do
             table.insert(listBet, listBaseBet[math.random(1, 5)])
             count = count + 1
         end
-        typeBet = math.random(2, 5)
-        if(typeBet == 1 or typeBet == 3 or typeBet == 4 or typeBet == 5) then
+        typeBet = math.random(2, 8)
+        if(typeBet == 1 or typeBet == 3 or typeBet == 4 or typeBet == 5 or typeBet == 6) then
             nextbet = sleepbet
+            chance = superChance_2
         elseif(typeBet == 2)then
             nextbet = basebet_2
+            chance = baseChance_2
+        elseif(typeBet == 7)then
+            nextbet = base_7
+            chance = chance_7
+        elseif(typeBet == 8)then
+            nextbet = base_8
+            chance = chance3
+        elseif(typeBet == 9)then
+            nextbet = baseBig_9
+            chance = chanceBig_9
         end
     end
     
@@ -297,6 +429,7 @@ function dobet()
     elseif(profit < lowProfit)then
         lowProfit = profit
     end
+    print("[Chance]:   ["..string.format("%.2f",chance).."]")  
     print("[Bet High]: ["..tostring(bethigh).."]")
     print("[Next Bet]: ["..string.format("%.8f",nextbet).."]  ["..string.format("%.4f",nextbet/(oldBalace)*100).."]%")
     print("[Profit]:   ["..string.format("%.8f",profit).."]  ["..string.format("%.4f",profit/(oldBalace)*100).."]%")
